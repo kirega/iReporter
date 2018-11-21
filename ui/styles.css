@@ -98,7 +98,7 @@ NAVBAR STYLES
 Landing Page banner
 ******************/
 .banner {
-    height: 85vh;
+    height: 88vh;
     min-height: 300px;
     text-align: center;
 }
@@ -157,7 +157,7 @@ Footer styles
     color: azure;
     height: 30px;
     padding: 10px;
-    /* position: fixed; */
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
