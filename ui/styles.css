@@ -147,27 +147,6 @@ Landing Page banner
     color: azure !important;
 }
 
-/*********************
-Landing Page content
-*********************/
-.flex-container.landing-content {
-    justify-content: center;
-}
-.landing-content .flex-item{
-    text-align: center;
-    font-size: 1.2rem;
-    color: #ffffff;
-}
-.landing-content h1 {
-    text-transform: uppercase;
-    color: #F2B134;
-}
-
-
-
-.landing-content .flex-item {
-    width: 50%
-}
 
 /****************************
 Footer styles
