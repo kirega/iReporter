@@ -98,7 +98,7 @@ NAVBAR STYLES
 Landing Page banner
 ******************/
 .banner {
-    height: 60vh;
+    height: 85vh;
     min-height: 300px;
     text-align: center;
 }
@@ -167,4 +167,19 @@ Landing Page content
 
 .landing-content .flex-item {
     width: 50%
+}
+
+/****************************
+Footer styles
+*****************************/
+.main-footer {
+    text-align: center;
+    background-color: #112f41;
+    color: azure;
+    height: 30px;
+    padding: 10px;
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
