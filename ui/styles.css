@@ -1,0 +1,71 @@
+/* Color Pallete 
+    - Navbar #3b8687
+    - Buttons and hovers #F2B134
+    - Text on buttons and navbar: #54b99f
+    - Danger colors : #eb553a
+    - Normal text : # black
+*/
+/******* 
+Global resets on margin paddins 
+and box sizing
+*******/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/**********************
+NAVBAR STYLES
+************************/
+.container {
+    width: 80%;
+    height: inherit;
+    margin: 0 auto;
+}
+
+.navbar {
+    background-color: #112f41;
+    height: 60px;
+}
+
+.navbar .container span {
+    height: inherit;
+}
+
+.nav {
+    list-style: none;
+    display: inline-block;
+    height: inherit;
+}
+
+/* Styles for the nav links*/
+
+
+.nav-item {
+    display: inline-block;
+    height: inherit;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #F2B134;
+}
+
+.nav-item:hover,
+.nav-item a:hover {
+    background-color: #068587;
+    color: azure;
+}
+
+.nav-right {
+    float: right;
+}
+.nav-brand {
+    font-family: 'Pacifico', cursive;
+    font-size: 20px !important;
+    padding-top: 5px;
+}
