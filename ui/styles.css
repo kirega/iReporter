@@ -4,7 +4,10 @@
     - Text on buttons and navbar: #54b99f
     - Danger colors : #eb553a
     - Normal text : # black
+
+    #068587
 */
+
 /******* 
 Global resets on margin paddins 
 and box sizing
@@ -15,14 +18,33 @@ and box sizing
     box-sizing: border-box;
 }
 
+body,
+html {
+    font-family: 'Lato', sans-serif;
+}
+.bg {
+    background: rgb(32, 52, 64);
+    background: linear-gradient(90deg, rgba(32, 52, 64, 1) 0%, rgba(184, 94, 78, 1) 50%, rgba(32, 52, 64, 1) 97%);
+}
+/*container definitions for reuse*/
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    padding: 10px;
+}
 
 /**********************
 NAVBAR STYLES
 ************************/
-.container {
-    width: 80%;
+.navbar .container {
     height: inherit;
-    margin: 0 auto;
 }
 
 .navbar {
@@ -58,14 +80,91 @@ NAVBAR STYLES
 .nav-item:hover,
 .nav-item a:hover {
     background-color: #068587;
-    color: azure;
+    color: azure !important;
 }
 
 .nav-right {
     float: right;
 }
+
 .nav-brand {
-    font-family: 'Pacifico', cursive;
-    font-size: 20px !important;
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px !important;
     padding-top: 5px;
+}
+
+
+/*****************
+Landing Page banner
+******************/
+.banner {
+    height: 60vh;
+    min-height: 300px;
+    text-align: center;
+}
+
+.banner .container {
+    padding: 20px;
+    padding-top: 80px;
+}
+
+.banner-subtitle,
+.banner-subtitle {
+    margin-bottom: 30px;
+}
+
+.banner-title {
+    /* padding-top:10px; */
+    color: #F2B134;
+    /* color: #eb553a; */
+    font-size: 4.5rem;
+}
+.banner-title span {
+    font-family: 'Dancing Script', cursive;
+    color: #F2B134;
+    font-size: 5rem;
+}
+
+.banner-subtitle {
+    font-size: 2rem;
+    text-transform: uppercase;
+    color:#ffffff;
+}
+
+.banner-button {
+    background-color: #F2B134;
+    color: #112f41;
+    font-size: 1.5rem;
+    padding: 15px 20px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 800;
+}
+
+.banner-button:hover {
+    background-color: #068587;
+    transition: ease-in 0.2s;
+    color: azure !important;
+}
+
+/*********************
+Landing Page content
+*********************/
+.flex-container.landing-content {
+    justify-content: center;
+}
+.landing-content .flex-item{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+.landing-content h1 {
+    text-transform: uppercase;
+    color: #F2B134;
+}
+
+
+
+.landing-content .flex-item {
+    width: 50%
 }
