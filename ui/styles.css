@@ -311,15 +311,16 @@ input[type=password] {
 /*User Profile*/
 .db-card-row {
     justify-content: space-around;
+    margin-top:10px;
 }
 .db-card{
     width: 200px;
     height: 150px;
-    background-color: bisque;
     margin:5px;
     padding: 20px 0px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0px 0px 30px 2px black;
 }
 .db-card h3{
     border-bottom: 1px solid black;
@@ -327,4 +328,16 @@ input[type=password] {
 }
 .db-card span{
     font-size: 4rem;
+}
+.db-card:nth-child(1){
+    background-color:#fdf81f;
+}
+.db-card:nth-child(2){
+    background-color:#377cc7;
+}
+.db-card:nth-child(3){
+    background-color:#68cd12;
+}
+.db-card:nth-child(4){
+    background-color:#8a1404;
 }
