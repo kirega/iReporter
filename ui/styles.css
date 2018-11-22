@@ -95,7 +95,21 @@ NAVBAR STYLES
     padding-top: 5px;
 }
 
-
+@media (max-width:415px){
+    .nav-brand {
+        font-size: 30px !important;
+    }
+    .nav-item {
+        padding: 15px 2px;
+        font-size: 16px;
+    }
+    .banner-title{
+        font-size:3.5rem;
+    }
+    .banner .container{
+        padding-top: 30px;
+    }
+}
 /*****************
 Landing Page banner
 ******************/
@@ -135,7 +149,7 @@ Landing Page banner
 }
 
 .banner-button {
-    background-color: #F2B134;
+    background-color: #4eea2a;
     color: #112f41;
     font-size: 1.5rem;
     padding: 15px 20px;
@@ -148,6 +162,17 @@ Landing Page banner
     background-color: #068587;
     transition: ease-in 0.2s;
     color: azure !important;
+}
+@media (max-width:464px){
+    .nav-brand {
+        font-size:30px !important;
+    }
+    .banner .container {
+        padding-top:30px;
+    }
+    .banner-title{
+        font-size:3.5rem;
+    }
 }
 
 
@@ -256,7 +281,7 @@ input[type=password] {
     width: 60%;
     font-size: 1rem;
     font-weight: 800;
-    background-color: #068587;
+    background-color: #4eea2a;
     padding: 10px 15px;
     border: none;
     border-radius: 2px;
@@ -282,3 +307,24 @@ input[type=password] {
 }
 
 /********************************************************************/
+
+/*User Profile*/
+.db-card-row {
+    justify-content: space-around;
+}
+.db-card{
+    width: 200px;
+    height: 150px;
+    background-color: bisque;
+    margin:5px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    text-align: center;
+}
+.db-card h3{
+    border-bottom: 1px solid black;
+    font-size:1rem;
+}
+.db-card span{
+    font-size: 4rem;
+}
