@@ -149,7 +149,7 @@ Landing Page banner
 }
 
 .banner-button {
-    background-color: #F2B134;
+    background-color: #4eea2a;
     color: #112f41;
     font-size: 1.5rem;
     padding: 15px 20px;
@@ -162,6 +162,17 @@ Landing Page banner
     background-color: #068587;
     transition: ease-in 0.2s;
     color: azure !important;
+}
+@media (max-width:464px){
+    .nav-brand {
+        font-size:30px !important;
+    }
+    .banner .container {
+        padding-top:30px;
+    }
+    .banner-title{
+        font-size:3.5rem;
+    }
 }
 
 
@@ -270,7 +281,7 @@ input[type=password] {
     width: 60%;
     font-size: 1rem;
     font-weight: 800;
-    background-color: #068587;
+    background-color: #4eea2a;
     padding: 10px 15px;
     border: none;
     border-radius: 2px;
