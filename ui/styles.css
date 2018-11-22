@@ -95,7 +95,21 @@ NAVBAR STYLES
     padding-top: 5px;
 }
 
-
+@media (max-width:415px){
+    .nav-brand {
+        font-size: 30px !important;
+    }
+    .nav-item {
+        padding: 15px 2px;
+        font-size: 16px;
+    }
+    .banner-title{
+        font-size:3.5rem;
+    }
+    .banner .container{
+        padding-top: 30px;
+    }
+}
 /*****************
 Landing Page banner
 ******************/
@@ -282,3 +296,24 @@ input[type=password] {
 }
 
 /********************************************************************/
+
+/*User Profile*/
+.db-card-row {
+    justify-content: space-around;
+}
+.db-card{
+    width: 200px;
+    height: 150px;
+    background-color: bisque;
+    margin:5px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    text-align: center;
+}
+.db-card h3{
+    border-bottom: 1px solid black;
+    font-size:1rem;
+}
+.db-card span{
+    font-size: 4rem;
+}
