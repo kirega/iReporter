@@ -28,7 +28,7 @@ html {
     background: linear-gradient(90deg, rgba(32, 52, 64, 1) 0%, rgba(184, 94, 78, 1) 50%, rgba(32, 52, 64, 1) 97%);
 }
 
-/*container definitions for reuse*/
+/*Utility class definitions for reuse*/
 .container {
     width: 80%;
     margin: 0 auto;
@@ -42,6 +42,11 @@ html {
     padding: 10px;
 }
 
+.bg-thematic-dark {
+    /* background-color: rgba(17, 47, 65, 0.74); */
+    background-color:#020b10d6;
+}
+
 /**********************
 NAVBAR STYLES
 ************************/
@@ -52,6 +57,7 @@ NAVBAR STYLES
 .navbar {
     background-color: #112f41;
     height: 60px;
+    box-shadow: 0px 1px 10px 7px black;
 }
 
 .navbar .container span {
@@ -95,21 +101,25 @@ NAVBAR STYLES
     padding-top: 5px;
 }
 
-@media (max-width:415px){
+@media (max-width:464px) {
     .nav-brand {
         font-size: 30px !important;
     }
-    .nav-item {
+
+    .nav-item  {
         padding: 15px 2px;
         font-size: 16px;
     }
-    .banner-title{
-        font-size:3.5rem;
+
+    .banner-title {
+        font-size: 3.5rem;
     }
-    .banner .container{
+
+    .banner .container {
         padding-top: 30px;
     }
 }
+
 /*****************
 Landing Page banner
 ******************/
@@ -163,17 +173,7 @@ Landing Page banner
     transition: ease-in 0.2s;
     color: azure !important;
 }
-@media (max-width:464px){
-    .nav-brand {
-        font-size:30px !important;
-    }
-    .banner .container {
-        padding-top:30px;
-    }
-    .banner-title{
-        font-size:3.5rem;
-    }
-}
+
 
 
 /****************************
@@ -189,6 +189,32 @@ Footer styles
     padding: 10px;
     position: absolute;
 }
+
+
+/* Media Queries */
+@media (max-width:664px) {
+    .main-footer {
+        position: relative;
+    }
+}
+    
+@media (max-width:464px) {
+    .nav-brand {
+        font-size: 30px !important;
+    }
+
+    .banner .container {
+        padding-top: 30px;
+    }
+
+    .banner-title {
+        font-size: 3.5rem;
+    }
+    .main-footer {
+        position: relative;
+    }
+}
+
 
 /**************************************************************/
 
@@ -235,11 +261,12 @@ input[type=password] {
     font-size: 1rem;
     font-weight: 700;
 }
+
 .entry-form ::-webkit-input-placeholder {
     text-transform: uppercase;
     font-weight: 300;
     text-align: left;
-    font-size:0.8rem;
+    font-size: 0.8rem;
 }
 
 .form-title a {
@@ -294,12 +321,14 @@ input[type=password] {
     transition: ease-in 0.2s;
     color: azure !important;
 }
+
 /*Form Media queries */
 @media (max-width: 764px) {
     .form-wrapper {
         width: 80%;
     }
 }
+
 @media (max-width: 364px) {
     .form-wrapper {
         width: 100%;
@@ -311,20 +340,125 @@ input[type=password] {
 /*User Profile*/
 .db-card-row {
     justify-content: space-around;
+    margin-top: 10px;
+    width: 100%;
 }
-.db-card{
-    width: 200px;
+
+.db-card {
+    width: 25%;
     height: 150px;
-    background-color: bisque;
-    margin:5px;
+    margin: 5px;
     padding: 20px 0px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0px 0px 30px 2px black;
 }
-.db-card h3{
+
+.db-card h3 {
     border-bottom: 1px solid black;
-    font-size:1rem;
+    font-size: 1rem;
 }
-.db-card span{
+
+.db-card span {
     font-size: 4rem;
+}
+
+.db-card:nth-child(1) {
+    background-color: #fdf81f;
+}
+
+.db-card:nth-child(2) {
+    background-color: #377cc7;
+}
+
+.db-card:nth-child(3) {
+    background-color: #68cd12;
+}
+
+.db-card:nth-child(4) {
+    background-color: #8a1404;
+}
+
+.db-content {
+    margin-top: 20px;
+    padding: 25px;
+    box-shadow: 0px 0px 30px 2px black;
+    border-radius: 10px;
+}
+@media(max-width:768px){
+    .db-card-row {
+        flex-wrap:wrap;
+        justify-content: space-evenly;
+    }
+    .db-card{
+        width: 40%;
+    }
+}
+@media(max-width:464px){
+    .db-card-row {
+        flex-flow: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    .db-card{
+        width: 100%;
+    }
+
+}
+
+/***************************
+ Table designs to be used in every page
+ ***************************/
+.main-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.main-table th {
+    font-weight: 800;
+}
+
+.main-table td,
+.main-table th {
+    text-align: left;
+    color: azure;
+   
+}
+.main-table th {
+    color: #F2B134;
+}
+.main-table td,
+.main-table th {
+    text-align: left;
+    padding: 5px;
+}
+.main-table thead tr{
+    background-color: #112f41;
+    text-transform: uppercase;
+}
+.main-table tr:nth-child(even){
+    background-color: #a5afafa3   ;
+}
+.main-table tr:hover {
+    background-color:#94b3b3;
+}
+@media(max-width:664px){
+    
+    .db-content.table {
+        overflow-x:auto;
+    }
+    .db-content {
+        padding: 10px;
+    }
+}
+@media(max-width:464px){
+
+    .db-content.table {
+        overflow-x:auto;
+    }
+    .db-content {
+        padding: 10px;
+    }
 }
