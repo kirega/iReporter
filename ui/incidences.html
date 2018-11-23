@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iReporter</title>
+    <!-- include CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body class="bg">
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item nav-brand">
+                    <a href="index.html">iReporter</a>
+                </li>
+            </ul>
+            <ul class="nav nav-right">
+                <li class="nav-item">
+                    <a href="./dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./report.html">Create Incident</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./incidences.html">My Incidences</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="flex-container add-button">
+            <a href='./addincident.html'>
+                <button class="form-button">Add Incident</button>
+            </a>
+        </div>
+        <div class="db-content table bg-thematic-dark">
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Media</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>1</td>
+                    <td>Bribing at Kinoo</td>
+                    <td>Red Flag</td>
+                    <td>A police woman was taking money from a matatu at Kinoo stage</td>
+                    <td>Waiyaki Way, Nairobi</td>
+                    <td>draft</td>
+                    <td>-</td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Huge pothole</td>
+                    <td>Intervention</td>
+                    <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
+                    <td>Landhies road, Nairobi</td>
+                    <td>Under Investigation</td>
+                    <td>True</td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Nepotism</td>
+                    <td>Red flag</td>
+                    <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
+                    <td>Landhies road, Nairobi</td>
+                    <td>Resolved</td>
+                    <td>True</td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Fallen Bridge</td>
+                    <td>Intervention</td>
+                    <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
+                    <td>Landhies road, Nairobi</td>
+                    <td>Rejected</td>
+                    <td>True</td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <footer class="main-footer">Copyright &copy;Kirega</footer>
+</body>
+</html>
