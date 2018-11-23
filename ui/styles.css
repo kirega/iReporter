@@ -186,7 +186,7 @@ Footer styles
     width: 100%;
     height: 30px;
     padding: 10px;
-    position: relative;
+    /* position: absolute; */
 }
 
 
