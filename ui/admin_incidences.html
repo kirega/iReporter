@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,8 @@
     <!-- include CSS -->
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
 </head>
 
 <body class="bg">
@@ -35,24 +38,6 @@
         </div>
     </nav>
     <div class="container">
-        <div class="flex-container db-card-row">
-            <div class="db-card">
-                <h3>Draft</h3>
-                <span>4</span>
-            </div>
-            <div class="db-card">
-                <h3>Under Investigation</h3>
-                <span>5</span>
-            </div>
-            <div class="db-card">
-                <h3>Resolved</h3>
-                <span>6</span>
-            </div>
-            <div class="db-card">
-                <h3>Rejected</h3>
-                <span>10</span>
-            </div>
-        </div>
         <div class="db-content table bg-thematic-dark">
             <table class="main-table">
                 <thead>
@@ -64,6 +49,8 @@
                         <th>Location</th>
                         <th>Status</th>
                         <th>Media</th>
+                        <th>User</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tr>
@@ -74,6 +61,8 @@
                     <td>Waiyaki Way, Nairobi</td>
                     <td>draft</td>
                     <td>-</td>
+                    <td>kirega</td>
+                    <td><i class="fas fa-trash"></i> <a href="./edit_incident.html"><i class="fas fa-edit"></i></a></i></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -82,7 +71,9 @@
                     <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
                     <td>Landhies road, Nairobi</td>
                     <td>Under Investigation</td>
-                    <td>True</td>
+                    <td>no</td>
+                    <td>John</td>
+                    <td><i class="fas fa-trash"></i> <a href="./edit_incident.html"><i class="fas fa-edit"></i></a></i></td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -91,7 +82,9 @@
                     <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
                     <td>Landhies road, Nairobi</td>
                     <td>Resolved</td>
-                    <td>True</td>
+                    <td>yes</td>
+                    <td>Peter</td>
+                    <td><i class="fas fa-trash"></i> <a href="./edit_incident.html"><i class="fas fa-edit"></i></a></i></td>
                 </tr>
                 <tr>
                     <td>4</td>
@@ -100,11 +93,14 @@
                     <td>A huge pothole is on Landhies road is causing a lot of traffic</td>
                     <td>Landhies road, Nairobi</td>
                     <td>Rejected</td>
-                    <td>True</td>
+                    <td>-</td>
+                    <td>Cheryl</td>
+                    <td><i class="fas fa-trash"></i> <a href="./edit_incident.html"><i class="fas fa-edit"></i></a></i></td>
                 </tr>
             </table>
         </div>
     </div>
     <footer class="main-footer">Copyright &copy;Kirega</footer>
 </body>
+
 </html>

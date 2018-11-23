@@ -531,10 +531,19 @@ FORM STYLES
     text-align: center;
 }
 
-.main-table td:last-child:hover {
-    color: #d8534f;
+td .fas {
+    margin: 0px 5px
 }
-
+.fa-trash:hover {
+   color:  #d8534f;
+}
+.fa-edit:hover{
+    color: #377cc7;
+}
+td a {
+    text-decoration: none;
+    color:azure;
+}
 @media(max-width:664px) {
 
     .db-content.table {
