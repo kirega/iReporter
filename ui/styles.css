@@ -597,3 +597,25 @@ FORM STYLES
     height: 300px;
     width: 700px;
 }
+
+.admin-status {
+    font-size:2rem;
+    color: #fdf81f;
+}
+.form-group select{
+    width: 25%;
+    height: 40px;
+    font-size: 16px;
+}
+.admin-status select:after {
+    color: red;
+}
+.tag {
+    background-color: #fdf81f;
+    padding:5px;
+    width: 50px;
+    text-transform: lowercase;
+    border: none;
+    border-radius: 10%;
+    float:right;
+}
