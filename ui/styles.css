@@ -186,7 +186,7 @@ Footer styles
     width: 100%;
     height: 30px;
     padding: 10px;
-    position: absolute;
+    position: relative;
 }
 
 
@@ -227,8 +227,9 @@ FORM STYLES
     /* margin-top: 10px; */
     /* height: 80vh; */
 }
+
 .form-wrapper,
-.incident-form-wrapper{
+.incident-form-wrapper {
     width: 40%;
     background-color: #112f41;
     margin: 20px auto;
@@ -250,8 +251,7 @@ FORM STYLES
 }
 
 .entry-form input[type=text],
-.entry-form input[type=password]
-{
+.entry-form input[type=password] {
     width: 90%;
     height: 40px;
     padding: 5px 10px;
@@ -333,14 +333,16 @@ FORM STYLES
         width: 100%;
     }
 }
-.incident-form .form-group{
+
+.incident-form .form-group {
     margin-top: 10px;
 }
-.incident-form-wrapper{
+
+.incident-form-wrapper {
     width: 100%;
 }
-.incident-form input
-{
+
+.incident-form input {
     width: 75%;
     height: 40px;
     padding: 5px 10px;
@@ -351,11 +353,12 @@ FORM STYLES
     line-height: normal;
     margin-top: 0px;
 }
-.incident-form .form-group textarea{
+
+.incident-form .form-group textarea {
     /* display: inline-block; */
     width: 75% !important;
     height: 100px;
-    border:none;
+    border: none;
     border-radius: 4px;
     padding: 5px 10px;
     /* margin-top: 10px; */
@@ -367,27 +370,32 @@ FORM STYLES
     text-align: left;
     font-size: 0.8rem;
 }
+
 .incident-form .form-group label {
     width: 25%;
     display: inline-block;
     float: left;
-    margin-top:5px;
+    margin-top: 5px;
 }
+
 .form-group-footer {
     font-size: 0.8rem;
-    color:#d8534f;
+    color: #d8534f;
     text-align: center;
     display: block;
 }
+
 .incident-form .form-group:last-child {
     text-align: right;
 }
+
 .incident-form .form-button {
     width: 25%;
     /* display: block;
     text-align: right; */
 }
-.required{
+
+.required {
     color: #d8534f;
 }
 
@@ -566,4 +574,18 @@ FORM STYLES
     background-color: #F2B134;
     transition: ease-in 0.2s;
     color: azure !important;
+}
+
+/* Google map styles */
+.mapouter {
+    text-align: right;
+    height: 300px;
+    width: 700px;
+}
+
+.gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    height: 300px;
+    width: 700px;
 }
