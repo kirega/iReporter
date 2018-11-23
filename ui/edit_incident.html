@@ -39,6 +39,7 @@
             <div class='incident-form-wrapper'>
                 <div>
                     <h1>Create an Incident</h1>
+                    <button class="tag">Draft</button>
                 </div>
                 <form action='./incidences.html' enctype="multipart/form-data" class="incident-form">
                     
@@ -46,8 +47,8 @@
                         <label for=incident_type>Status <span class='required'>*</span></label>
     
                         <select name="incident_type" >
-                            <option value="">Draft</option>
-                            <option value="red_flag">Under Investigation</option>
+                            <option value="draft">Draft</option>
+                            <option value="ui">Under Investigation</option>
                             <option value="rejected">Rejected</option>
                             <option value="resolved">Resolved</option>
                         </select>
