@@ -77,7 +77,7 @@ NAVBAR STYLES
     display: inline-block;
     height: inherit;
     padding: 20px 5px;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .nav-item a {
@@ -95,6 +95,11 @@ NAVBAR STYLES
     float: right;
 }
 
+
+.index .nav-right .nav-item{
+    font-size: 20px;
+    padding: 20px 5px;
+}
 .nav-brand {
     font-family: 'Dancing Script', cursive;
     font-size: 40px !important;
@@ -186,7 +191,7 @@ Footer styles
     width: 100%;
     height: 30px;
     padding: 10px;
-    /* position: absolute; */
+    position: absolute;
 }
 
 
@@ -333,7 +338,10 @@ FORM STYLES
         width: 100%;
     }
 }
-
+.incident {
+    height: 100%;
+    position: relative;
+}
 .incident-form .form-group {
     margin-top: 10px;
 }
