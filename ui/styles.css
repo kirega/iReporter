@@ -44,7 +44,7 @@ html {
 
 .bg-thematic-dark {
     /* background-color: rgba(17, 47, 65, 0.74); */
-    background-color:#020b10d6;
+    background-color: #020b10d6;
 }
 
 /**********************
@@ -106,7 +106,7 @@ NAVBAR STYLES
         font-size: 30px !important;
     }
 
-    .nav-item  {
+    .nav-item {
         padding: 15px 2px;
         font-size: 16px;
     }
@@ -196,7 +196,7 @@ Footer styles
         position: relative;
     }
 }
-    
+
 @media (max-width:464px) {
     .nav-brand {
         font-size: 30px !important;
@@ -209,6 +209,7 @@ Footer styles
     .banner-title {
         font-size: 3.5rem;
     }
+
     .main-footer {
         position: relative;
     }
@@ -226,8 +227,8 @@ FORM STYLES
     /* margin-top: 10px; */
     /* height: 80vh; */
 }
-
-.form-wrapper {
+.form-wrapper,
+.incident-form-wrapper{
     width: 40%;
     background-color: #112f41;
     margin: 20px auto;
@@ -243,15 +244,14 @@ FORM STYLES
     font-size: 1rem;
 }
 
-/* .form-group label, */
 .form-group input {
     display: inline-block;
-    /* width: 50%; */
     margin-top: 15px;
 }
 
 .entry-form input[type=text],
-input[type=password] {
+.entry-form input[type=password],
+{
     width: 90%;
     height: 40px;
     padding: 5px 10px;
@@ -333,6 +333,64 @@ input[type=password] {
         width: 100%;
     }
 }
+.incident-form .form-group{
+    margin-top: 10px;
+}
+.incident-form-wrapper{
+    width: 100%;
+}
+.incident-form input
+{
+    width: 75%;
+    height: 40px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 0px;
+}
+.incident-form .form-group textarea{
+    /* display: inline-block; */
+    width: 75% !important;
+    height: 100px;
+    border:none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    /* margin-top: 10px; */
+}
+
+.incident-form ::-webkit-input-placeholder {
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: left;
+    font-size: 0.8rem;
+}
+.incident-form .form-group label {
+    width: 25%;
+    display: inline-block;
+    float: left;
+    margin-top:5px;
+}
+.form-group-footer {
+    font-size: 0.8rem;
+    color:#d8534f;
+    text-align: center;
+    display: block;
+}
+.incident-form .form-group:last-child {
+    text-align: right;
+}
+.incident-form .form-button {
+    width: 25%;
+    /* display: block;
+    text-align: right; */
+}
+.required{
+    color: #d8534f;
+}
+
 
 /********************************************************************/
 
@@ -384,23 +442,27 @@ input[type=password] {
     box-shadow: 0px 0px 30px 2px black;
     border-radius: 10px;
 }
-@media(max-width:768px){
+
+@media(max-width:768px) {
     .db-card-row {
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         justify-content: space-evenly;
     }
-    .db-card{
+
+    .db-card {
         width: 40%;
     }
 }
-@media(max-width:464px){
+
+@media(max-width:464px) {
     .db-card-row {
         flex-flow: column;
         justify-content: space-around;
         flex-wrap: wrap;
         margin-top: 10px;
     }
-    .db-card{
+
+    .db-card {
         width: 100%;
     }
 
@@ -423,58 +485,72 @@ input[type=password] {
 .main-table th {
     text-align: left;
     color: azure;
-   
+
 }
+
 .main-table th {
     color: #F2B134;
 }
+
 .main-table td,
 .main-table th {
     text-align: left;
     padding: 5px;
 }
-.main-table thead tr{
+
+.main-table thead tr {
     background-color: #112f41;
     text-transform: uppercase;
 }
-.main-table tr:nth-child(even){
-    background-color: #a5afafa3   ;
+
+.main-table tr:nth-child(even) {
+    background-color: #a5afafa3;
 }
+
 .main-table tr:hover {
-    background-color:#94b3b3;
+    background-color: #94b3b3;
 }
-.main-table td:last-child{
+
+.main-table td:last-child {
     text-align: center;
 }
-.main-table  td:last-child:hover{
+
+.main-table td:last-child:hover {
     color: #d8534f;
 }
-@media(max-width:664px){
-    
-    .db-content.table {
-        overflow-x:auto;
-    }
-    .db-content {
-        padding: 10px;
-    }
-}
-@media(max-width:464px){
+
+@media(max-width:664px) {
 
     .db-content.table {
-        overflow-x:auto;
+        overflow-x: auto;
     }
+
     .db-content {
         padding: 10px;
     }
 }
+
+@media(max-width:464px) {
+
+    .db-content.table {
+        overflow-x: auto;
+    }
+
+    .db-content {
+        padding: 10px;
+    }
+}
+
 /* Incidences Page specific changes */
 .add-button {
     justify-content: flex-end;
 }
-.add-button a{
+
+.add-button a {
     width: 25%:
 }
-.add-button .form-button{
+
+.add-button .form-button {
     width: 100%;
     font-size: 1rem;
     font-weight: 800;
@@ -485,6 +561,7 @@ input[type=password] {
     margin-top: 15px;
     text-transform: uppercase;
 }
+
 .add-button .form-button:hover {
     background-color: #F2B134;
     transition: ease-in 0.2s;
