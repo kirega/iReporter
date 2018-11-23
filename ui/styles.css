@@ -250,7 +250,7 @@ FORM STYLES
 }
 
 .entry-form input[type=text],
-.entry-form input[type=password],
+.entry-form input[type=password]
 {
     width: 90%;
     height: 40px;
