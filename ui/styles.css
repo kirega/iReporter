@@ -175,7 +175,6 @@ Landing Page banner
 }
 
 
-
 /****************************
 Footer styles
 *****************************/
@@ -444,6 +443,12 @@ input[type=password] {
 .main-table tr:hover {
     background-color:#94b3b3;
 }
+.main-table td:last-child{
+    text-align: center;
+}
+.main-table  td:last-child:hover{
+    color: #d8534f;
+}
 @media(max-width:664px){
     
     .db-content.table {
@@ -461,4 +466,27 @@ input[type=password] {
     .db-content {
         padding: 10px;
     }
+}
+/* Incidences Page specific changes */
+.add-button {
+    justify-content: flex-end;
+}
+.add-button a{
+    width: 25%:
+}
+.add-button .form-button{
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 800;
+    background-color: #4eea2a;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 2px;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+.add-button .form-button:hover {
+    background-color: #F2B134;
+    transition: ease-in 0.2s;
+    color: azure !important;
 }
