@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+[![Build Status](https://travis-ci.org/kirega/iReporter.svg?branch=develop)](https://travis-ci.org/kirega/iReporter)
 
 # iReporter
 ## Project Overview
