@@ -5,7 +5,7 @@
 
 import unittest
 from app import create_app
-from flask import json
+from flask import jsonify, json
 
 app = create_app()
 
@@ -17,12 +17,27 @@ class FlaskUserTest(unittest.TestCase):
 
     def setUp(self):
         """Initialize the reusable parts """
-        user_signup_data = {'first_name': 'Joseph', 'last_name': 'Mutiga', "other_names": "Kirega", "phonenumber": "0716570355",
-                            'email': 'joseph.mutiga@gmail.com', 'username': 'joe', "password": "1234"}
-        wrong_signup_data = {'first_name': 'Joseph', 'last_name': 'Mutiga', "other_names": "Kirega",
-                             'email': 'joseph.mutiga@gmail.com', 'username': 'joe', "password": "1234"}
-        admin_signup_data = {'first_name': 'Joseph', 'last_name': 'Mutiga', "other_names": "Kirega", "phonenumber": "0716570355",
-                             'email': 'joseph.mutiga@gmail.com', 'username': 'joe', "password": "1234", "isAdmin": True}
+        user_signup_data = {"first_name": "Joseph",
+                            "last_name": "Mutiga",
+                            "other_names": "Kirega",
+                            "phonenumber": "0716570355",
+                            "email": 'joseph.mutiga@gmail.com',
+                            "username": "joe",
+                            "password": "1234"}
+        wrong_signup_data = {"first_name": "Joseph",
+                             "last_name": "Mutiga",
+                             "other_names": "Kirega",
+                             "email": "joseph.mutiga@gmail.com",
+                             "username": "joe",
+                             "password": "1234"}
+        admin_signup_data = {"first_name": "Joseph",
+                             "last_name": "Mutiga",
+                             "other_names": "Kirega",
+                             "phonenumber": "0716570355",
+                             "email": "joseph.mutiga@gmail.com",
+                             "username": "joe",
+                             "password": "1234",
+                             "isAdmin": True}
         login_data = {"username": "joe", "password": "1234"}
         wrong_login_data = {"username": "joe", "password": "12345"}
         self.app = app.test_client()
@@ -35,33 +50,36 @@ class FlaskUserTest(unittest.TestCase):
 
     def test_user_can_signup(self):
         "Test that by posting user data to the endpoint, it gets created"
-        result = self.app.post('/api/v1/users', data=self.user_data)
+        result = self.app.post('/api/v1/signup', data=self.user_data)
         self.assertEqual(result.status_code, 201)
-        self.assertEqual(json.loads([result.data]),
-                         "Sign Up successful. Welcome!")
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Sign Up successful. Welcome!")
 
     def test_user_signup_with_wrong_data(self):
         "Test that by posting user data to the endpoint, it doest not get created"
-        result = self.app.post('/api/v1/users', data=self.wrong_signup_data)
+        result = self.app.post('/api/v1/signup', data=self.wrong_signup_data)
         self.assertEqual(result.status_code, 400)
-        self.assertEqual(json.loads([result.data]),
-                         "Missing or invalid field members")
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Missing or invalid field members")
 
     def test_admin_can_signup(self):
         "Test that by posting admin data to the endpoint, it gets created"
-        result = self.app.post('/api/v1/users', data=self.admin_data)
+        result = self.app.post('/api/v1/signup', data=self.admin_data)
+        print(result)
         self.assertEqual(result.status_code, 201)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Sign Up successful. Welcome!")
 
     def test_login_with_right_credentials(self):
         """Test that a user/admin providing correct credentials in able to login"""
-        result = self.app.post('/api/v1/users', data=self.login_data)
+        result = self.app.post('/api/v1/login', data=self.login_data)
         self.assertEqual(result.status_code, 200)
-        self.assertEqual(json.loads([result.data]),
-                         "Login Success!")
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Login Success!")
 
     def test_login_with_wrong_credentials(self):
         """Test that a user providing correct credentials in able to login"""
-        result = self.app.post('/api/v1/users', data=self.login_data)
+        result = self.app.post('/api/v1/login', data=self.login_data)
         self.assertEqual(result.status_code, 401)
-        self.assertEqual(json.loads([result.data]),
-                         "Login Failed!")
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Login Failed!")
