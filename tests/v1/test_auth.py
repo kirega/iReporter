@@ -49,10 +49,10 @@ class FlaskUserTest(unittest.TestCase):
                              "other_names": "Kirega",
                              "phonenumber": "0716570355",
                              "email": "joseph.mutiga@gmail.com",
-                             "username": "joe",
+                             "username": "joep",
                              "password": "1234",
                              "isAdmin": True}
-        login_data = {"username": "joe", "password": "1234"}
+        login_data = {"username": "kirega", "password": "1234"}
         wrong_login_data = {"username": "joe", "password": "12345"}
         self.app = app.test_client()
         self.app.testing = True
