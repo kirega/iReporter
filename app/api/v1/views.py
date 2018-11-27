@@ -21,30 +21,36 @@ class SignUp(Resource):
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
         if all(i in data for i in list_of_fields):
+            userid = len(self.users) + 1 #Auto increment ids for all new users.
             if 'is_admin' in data:
-                 new_user = User(first_name=data['first_name'],
-                            last_name=data['last_name'],
-                            other_names = data['other_names'],
-                            phonenumber=data['phonenumber'],
-                            email=data['email'],
-                            username=data['username'],
-                            password=data["password"],
-                            isAdmin=data['isAdmin']
-                            )
+                new_user = User(
+                    userid=userid,
+                    first_name=data['first_name'],
+                    last_name=data['last_name'],
+                    other_names=data['other_names'],
+                    phonenumber=data['phonenumber'],
+                    email=data['email'],
+                    username=data['username'],
+                    password=data["password"],
+                    isAdmin=data['isAdmin']
+                )
             else:
-                new_user = User(first_name=data['first_name'],
-                                last_name=data['last_name'],
-                                other_names = data['other_names'],
-                                phonenumber=data['phonenumber'],
-                                email=data['email'],
-                                username=data['username'],
-                                password=data["password"]
-                                )
+                new_user = User(
+                    userid=userid,
+                    first_name=data['first_name'],
+                    last_name=data['last_name'],
+                    other_names=data['other_names'],
+                    phonenumber=data['phonenumber'],
+                    email=data['email'],
+                    username=data['username'],
+                    password=data["password"]
+                )
             self.users.append(new_user)
         else:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
         return make_response(jsonify({"message": "Sign Up successful. Welcome!"}), 201)
+
 
 class Login(Resource):
     pass
