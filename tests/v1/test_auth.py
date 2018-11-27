@@ -53,7 +53,10 @@ class FlaskUserTest(unittest.TestCase):
                              "password": "1234",
                              "isAdmin": True}
         login_data = {"username": "kirega", "password": "1234"}
-        wrong_login_data = {"username": "joe", "password": "12345"}
+        nonexisting_user = {"username": "Tyron", "password": "1234"}
+        wrong_login_data = {"username": "kirega", "password": "12345"}
+        wrong_login_data_format = {
+            "username_name": "kirega", "password": "1234"}
         self.app = app.test_client()
         self.app.testing = True
         self.user_data = json.dumps(user_signup_data)
@@ -66,6 +69,8 @@ class FlaskUserTest(unittest.TestCase):
         self.duplicate_email_signup_data = json.dumps(
             duplicate_email_signup_data
         )
+        self.wrong_login_data_format = json.dumps(wrong_login_data_format)
+        self.nonexisting_user = nonexisting_user
 
     def test_user_can_signup(self):
         "Test that by posting user data to the endpoint, it gets created"
@@ -98,10 +103,27 @@ class FlaskUserTest(unittest.TestCase):
 
     def test_login_with_wrong_credentials(self):
         """Test that a user providing correct credentials in able to login"""
-        result = self.app.post('/api/v1/login', data=self.login_data)
+        result = self.app.post('/api/v1/login', data=self.wrong_login_data)
         self.assertEqual(result.status_code, 401)
         data = json.loads(result.data)
         self.assertEqual(data['message'], "Login Failed!")
+
+    def test_login_with_wrong_format(self):
+        """Test that a user providing correct credentials in able to login"""
+        result = self.app.post(
+            '/api/v1/login', data=self.wrong_login_data_format)
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Missing or invalid field members")
+
+    # def test_login_with_nonexisting_user(self):
+    #     """Test that a user providing correct credentials in is unable to login
+    #      if user does not exist"""
+    #     result = self.app.post(
+    #         '/api/v1/login', data=self.nonexisting_user)
+    #     self.assertEqual(result.status_code, 401)
+    #     data = json.loads(result.data)
+    #     self.assertEqual(data['message'], "User does not exist")
 
     def test_sign_up_existing_username(self):
         """"Tests that a username and email are unique"""
@@ -118,3 +140,6 @@ class FlaskUserTest(unittest.TestCase):
         self.assertEqual(result.status_code, 400)
         data = json.loads(result.data)
         self.assertEqual(data['message'], "Email already exists")
+
+if __name__ == '__main__':
+    unittest.main()
