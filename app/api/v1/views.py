@@ -1,11 +1,50 @@
-from flask import make_response,jsonify
+"""
+this file will include all the view endpoints for the application.
+"""
+
+from flask import make_response, jsonify, request
 from flask_restful import Resource
+from .models import User
 
-users = ['Peter','Mary']
+user_db = []
 
-class User(Resource):
+
+class SignUp(Resource):
     def __init__(self):
-        self.users = users
+        self.users = user_db
 
-    def get(self):
-        return make_response(jsonify(self.users), 200)
+    def post(self):
+        data = request.get_json(force=True)
+        list_of_fields = ['first_name', "last_name", "other_names", "phonenumber", "email",
+                          "email", "username", "password"]
+        if not data:
+            return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
+
+        if all(i in data for i in list_of_fields):
+            if 'is_admin' in data:
+                 new_user = User(first_name=data['first_name'],
+                            last_name=data['last_name'],
+                            other_names = data['other_names'],
+                            phonenumber=data['phonenumber'],
+                            email=data['email'],
+                            username=data['username'],
+                            password=data["password"],
+                            isAdmin=data['isAdmin']
+                            )
+            else:
+                new_user = User(first_name=data['first_name'],
+                                last_name=data['last_name'],
+                                other_names = data['other_names'],
+                                phonenumber=data['phonenumber'],
+                                email=data['email'],
+                                username=data['username'],
+                                password=data["password"]
+                                )
+            self.users.append(new_user)
+        else:
+            return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
+
+        return make_response(jsonify({"message": "Sign Up successful. Welcome!"}), 201)
+
+class Login(Resource):
+    pass
