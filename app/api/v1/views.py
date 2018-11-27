@@ -27,7 +27,6 @@ class SignUp(Resource):
 
     def post(self):
         data = request.get_json(force=True)
-        print(data)
         list_of_fields = ['first_name', "last_name", "other_names", "phonenumber", "email",
                           "email", "username", "password"]
         if not data:
@@ -76,4 +75,27 @@ class SignUp(Resource):
 
 
 class Login(Resource):
-    pass
+    """"This endpoints handles all login posts"""
+
+    def __init__(self):
+        self.users = user_db
+
+    def post(self):
+        # check that the user exists and the password is correct.
+        data = request.get_json(force=True)
+        
+        if not data:
+            return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
+
+        required_fields = ['username', 'password']
+        if all(i in data for i in required_fields):
+            for user in self.users:
+                if user.username == data['username']:
+                    if user.password == data['password']:
+                        return make_response(jsonify({"message": "Login Success!"}), 200)
+                    else:
+                        return make_response(jsonify({"message": "Login Failed!"}), 401)
+
+            return make_response(jsonify({"message": "User does not exist"}), 401)
+        else:
+            return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
