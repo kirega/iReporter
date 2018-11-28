@@ -4,7 +4,7 @@
 """
 
 import unittest
-from app import create_app
+from ... import create_app
 from flask import jsonify, json
 
 app = create_app()
