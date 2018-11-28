@@ -4,7 +4,7 @@ this file will include all the view endpoints for the application.
 
 from flask import make_response, jsonify, request
 from flask_restful import Resource
-from .models import User, Incident
+from .models import User, IncidentModel
 
 # default User
 default_user = User(
@@ -21,7 +21,7 @@ default_user = User(
 user_db = [default_user]
 
 
-class SignUp(Resource):
+class SignUpEndpoint(Resource):
     def __init__(self):
         self.users = user_db
 
@@ -74,7 +74,7 @@ class SignUp(Resource):
         return make_response(jsonify({"message": "Sign Up successful. Welcome!"}), 201)
 
 
-class Login(Resource):
+class LoginEndpoint(Resource):
     """"This endpoints handles all login posts"""
 
     def __init__(self):
@@ -101,14 +101,14 @@ class Login(Resource):
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
 
-class AllIncidents(Resource, Incident):
+class AllIncidentsEndpoint(Resource, IncidentModel):
     """
         This endpoint handles the GET to get all incidents
         As well as POST for any new incident
     """
 
     def __init__(self):
-        self.db = Incident()
+        self.db = IncidentModel()
         # default_user
         self.db.save("intervention",
                      "Police taking bribes",
@@ -134,3 +134,25 @@ class AllIncidents(Resource, Incident):
             return make_response(jsonify({"message": "New incident created"}), 201)
         else:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
+
+
+class IncidentEndpoint(Resource, IncidentModel):
+    def __init__(self):
+        self.incident = IncidentModel()
+
+    def get(self, incidentId):
+        if(len(self.incident.db) > 0):
+            result = next(
+                filter(lambda i:  i["incidentId"] == incidentId, self.incident.db))
+            if len(result) > 1:
+                return make_response(jsonify(result), 200)
+            else:
+                return make_response(jsonify({"message": "Incident does not exist"}))
+        else:
+            return make_response(jsonify({"message":"No incidents created yet!"}), 200)
+
+    def put(self, id):
+        pass
+
+    def delete(self, id):
+        pass

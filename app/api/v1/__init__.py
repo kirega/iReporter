@@ -1,10 +1,10 @@
 from flask import Blueprint
 from flask_restful import Api
-from .views import SignUp, Login, AllIncidents
+from .views import SignUpEndpoint, LoginEndpoint, AllIncidentsEndpoint, IncidentEndpoint
 
 v1 = Blueprint('api', __name__, url_prefix='/api/v1')
-api =  Api(v1)
-api.add_resource(SignUp,'/signup')
-api.add_resource(Login,'/login')
-api.add_resource(AllIncidents,'/incidents')
-
+api = Api(v1)
+api.add_resource(SignUpEndpoint, '/signup')
+api.add_resource(LoginEndpoint, '/login')
+api.add_resource(AllIncidentsEndpoint, '/incidents')
+api.add_resource(IncidentEndpoint, '/incident/<int:incidentId>')

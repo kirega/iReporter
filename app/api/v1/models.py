@@ -38,7 +38,7 @@ class RedFlags():
 
 incidents = []
 
-class Incident():
+class IncidentModel():
     def __init__(self):
         self.db = incidents
 
