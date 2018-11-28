@@ -4,7 +4,7 @@ this file will include all the view endpoints for the application.
 
 from flask import make_response, jsonify, request
 from flask_restful import Resource
-from .models import User
+from .models import User, Incident
 
 # default User
 default_user = User(
@@ -83,7 +83,7 @@ class Login(Resource):
     def post(self):
         # check that the user exists and the password is correct.
         data = request.get_json(force=True)
-        
+
         if not data:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
@@ -97,5 +97,40 @@ class Login(Resource):
                         return make_response(jsonify({"message": "Login Failed!"}), 401)
 
             return make_response(jsonify({"message": "User does not exist"}), 401)
+        else:
+            return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
+
+
+class AllIncidents(Resource, Incident):
+    """
+        This endpoint handles the GET to get all incidents
+        As well as POST for any new incident
+    """
+
+    def __init__(self):
+        self.db = Incident()
+        # default_user
+        self.db.save("intervention",
+                     "Police taking bribes",
+                     "-1.28333, 36.81667",
+                     "1",
+                     ["https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg",
+                      "https://wallpaperbrowse.com/media/images/th.jpg"],
+                     ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
+                     )
+
+    def get(self):
+        return make_response(jsonify(self.db.db), 200)
+
+    def post(self):
+        data = request.get_json(force=True)
+        required_fields = ["incidentType", "comment",
+                           "location", "createdBy", "images", "videos"]
+
+        if all(i in data for i in required_fields):
+            self.db.save(data['incidentType'], data["comment"], data['location'],
+                         data['createdBy'], data['images'], data['videos'])
+            return make_response(jsonify({"message": "New incident created"}), 201)
         else:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)

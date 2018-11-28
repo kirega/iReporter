@@ -27,10 +27,31 @@ class RedFlags():
                  images=[], videos=[], createdOn=datetime.datetime.now()):
         self.incidentId = incidentId
         self.createdOn = createdOn
-        self.createdBy= createdBy
-        self.incidentType= incidentType
+        self.createdBy = createdBy
+        self.incidentType = incidentType
         self.location = location
-        self.status= status
-        self.comment= comment
+        self.status = status
+        self.comment = comment
         self.images = images
         self.videos = videos
+
+
+incidents = []
+
+class Incident():
+    def __init__(self):
+        self.db = incidents
+
+    def save(self,incidentType,comment,location,createdBy,images,videos):
+        data = {
+            "instanceId": len(self.db) + 1,
+            "createdOn": datetime.datetime.now(),
+            "createdBy":createdBy,
+            "incidentType":incidentType,
+            "location": location,
+            "status": "draft",
+            "comment": comment,
+            "images" : images,
+            "videos": videos
+        }   
+        self.db.append(data)
