@@ -20,3 +20,17 @@ class User():
 
     def __str__(self):
         return '{} {} {}'.format(self.userid, self.username, self.isAdmin)
+
+
+class RedFlags():
+    def __init__(self, incidentId, incidentType, location, status, comment, createdBy,
+                 images=[], videos=[], createdOn=datetime.datetime.now()):
+        self.incidentId = incidentId
+        self.createdOn = createdOn
+        self.createdBy= createdBy
+        self.incidentType= incidentType
+        self.location = location
+        self.status= status
+        self.comment= comment
+        self.images = images
+        self.videos = videos
