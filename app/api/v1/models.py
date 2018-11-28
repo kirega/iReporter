@@ -22,20 +22,6 @@ class User():
         return '{} {} {}'.format(self.userid, self.username, self.isAdmin)
 
 
-class RedFlags():
-    def __init__(self, incidentId, incidentType, location, status, comment, createdBy,
-                 images=[], videos=[], createdOn=datetime.datetime.now()):
-        self.incidentId = incidentId
-        self.createdOn = createdOn
-        self.createdBy = createdBy
-        self.incidentType = incidentType
-        self.location = location
-        self.status = status
-        self.comment = comment
-        self.images = images
-        self.videos = videos
-
-
 incidents = []
 
 class IncidentModel():
@@ -44,7 +30,7 @@ class IncidentModel():
 
     def save(self,incidentType,comment,location,createdBy,images,videos):
         data = {
-            "instanceId": len(self.db) + 1,
+            "incidentId": len(self.db) + 1,
             "createdOn": datetime.datetime.now(),
             "createdBy":createdBy,
             "incidentType":incidentType,

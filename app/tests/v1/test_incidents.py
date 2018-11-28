@@ -21,7 +21,16 @@ class IncidentsTest(unittest.TestCase):
             "comment": "Police taking a bribe",
             "incidentType": "red-flag",
             "location": "-1.28333, 36.81667",
-            "createdBy": "1",
+            "createdBy": 1,
+            "images": [image_in_base64, image_in_base64],
+            "videos": ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
+        }
+        new_incident_data_nonexisting_user = {
+            "comment": "Police taking a bribe",
+            "incidentType": "red-flag",
+            "location": "-1.28333, 36.81667",
+            "createdBy": 100,
             "images": [image_in_base64, image_in_base64],
             "videos": ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
@@ -30,7 +39,7 @@ class IncidentsTest(unittest.TestCase):
             "comment": "Police taking a bribe",
             "incidntType": "red-flag",
             "location": "-1.28333, 36.81667",
-            "createdBy": "1",
+            "createdBy": 1,
             "images": [image_in_base64, image_in_base64],
             "videos": ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
@@ -38,6 +47,8 @@ class IncidentsTest(unittest.TestCase):
         self.new_incident = json.dumps(new_incident_data)
         self.new_incident_data_with_wrong_format = json.dumps(
             new_incident_data_with_wrong_format)
+        self.new_incident_data_nonexisting_user = json.dumps(
+            new_incident_data_nonexisting_user)
 
     def test_create_new_incident(self):
         result = self.app.post('/api/v1/incidents', data=self.new_incident)
@@ -56,8 +67,20 @@ class IncidentsTest(unittest.TestCase):
         result = self.app.get('/api/v1/incidents')
         self.assertEqual(result.status_code, 200)
     
-    def test_create_new_incident_user_exist(self):
-        pass
+    def test_create_new_incident_user_doesnt_exist(self):
+        result = self.app.post('/api/v1/incidents', data=self.new_incident_data_nonexisting_user)
+        self.assertEqual(result.status_code, 401)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Not Authorized")
+
+    def test_get_specific_incident(self):
+        result  = self.app.get("/api/v1/incident/1")
+        self.assertEqual(result.status_code, 200)
+
+    def test_get_non_existing_record(self):
+        result  = self.app.get("/api/v1/incident/1000")
+        self.assertEqual(result.status_code, 404)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main() 
+    

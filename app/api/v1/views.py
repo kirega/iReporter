@@ -101,15 +101,10 @@ class LoginEndpoint(Resource):
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
 
-class AllIncidentsEndpoint(Resource, IncidentModel):
-    """
-        This endpoint handles the GET to get all incidents
-        As well as POST for any new incident
-    """
-
+class BaseIncidentEndpoint(Resource, IncidentModel):
     def __init__(self):
         self.db = IncidentModel()
-        # default_user
+        # default record    
         self.db.save("intervention",
                      "Police taking bribes",
                      "-1.28333, 36.81667",
@@ -119,7 +114,14 @@ class AllIncidentsEndpoint(Resource, IncidentModel):
                      ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
                      )
+        self.userdb = user_db
 
+
+class AllIncidentsEndpoint(BaseIncidentEndpoint):
+    """
+        This endpoint handles the GET to get all incidents
+        As well as POST for any new incident
+    """
     def get(self):
         return make_response(jsonify(self.db.db), 200)
 
@@ -129,27 +131,30 @@ class AllIncidentsEndpoint(Resource, IncidentModel):
                            "location", "createdBy", "images", "videos"]
 
         if all(i in data for i in required_fields):
-            self.db.save(data['incidentType'], data["comment"], data['location'],
-                         data['createdBy'], data['images'], data['videos'])
-            return make_response(jsonify({"message": "New incident created"}), 201)
+            result = next(filter(lambda u: u.userid == data['createdBy'], self.userdb), None)
+            if result is not None:
+                self.db.save(data['incidentType'], data["comment"], data['location'],
+                            data['createdBy'], data['images'], data['videos'])
+                return make_response(jsonify({"message": "New incident created"}), 201)
+            else:
+                return make_response(jsonify({"message": "Not Authorized"}), 401)
+                
         else:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
 
-class IncidentEndpoint(Resource, IncidentModel):
-    def __init__(self):
-        self.incident = IncidentModel()
+class IncidentEndpoint(BaseIncidentEndpoint):
 
     def get(self, incidentId):
-        if(len(self.incident.db) > 0):
+        if(len(self.db.db) > 0):
             result = next(
-                filter(lambda i:  i["incidentId"] == incidentId, self.incident.db))
-            if len(result) > 1:
+                filter(lambda i: i["incidentId"] == incidentId, self.db.db), None)
+            if result is not None:
                 return make_response(jsonify(result), 200)
             else:
-                return make_response(jsonify({"message": "Incident does not exist"}))
+                return make_response(jsonify({"message": "Incident does not exist"}),404)
         else:
-            return make_response(jsonify({"message":"No incidents created yet!"}), 200)
+            return make_response(jsonify({"message": "No incidents created yet!"}), 200)
 
     def put(self, id):
         pass
