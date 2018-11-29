@@ -159,5 +159,49 @@ class IncidentEndpoint(BaseIncidentEndpoint):
     def put(self, id):
         pass
 
-    def delete(self, id):
-        pass
+
+class IncidentEditCommentEndpoint(BaseIncidentEndpoint):
+    def put(self, incidentId):
+        data = request.get_json(force=True)
+        if len(data) > 0:
+            result = self.search(incidentId)
+            if result is not None:
+                if result['status'] == 'draft':
+                    if 'comment' in data and 'userid' in data :
+                        user =  self.search_user(data['userid'])
+                        if user is not None and user.userid == result['createdBy']:
+                            result['comment'] = data['comment']
+                            return make_response(jsonify({'message': "Incident Updated", "data":result}), 200)
+                        else:
+                            return make_response(jsonify({"message":"Forbidden: Record not owned"}), 403)
+                    else:
+                        return make_response(jsonify({"message":"Comment/userid is not present"}), 400)
+                else:
+                    return make_response(jsonify({"message":"Cannot update a record not in draft state"}),403)
+            else:
+                return make_response(jsonify({"message":"Update on non-existing record denied"}),404)
+        else:
+            return make_response(jsonify({"message": "Empty payload"}), 400)       
+
+class IncidentEditLocationEndpoint(BaseIncidentEndpoint):
+    def put(self, incidentId):
+        data = request.get_json(force=True)
+        if len(data) > 0:
+            result = self.search(incidentId)
+            if result is not None:
+                if result['status'] == 'draft':
+                    if 'location' in data and 'userid' in data:
+                        user =  self.search_user(data['userid'])
+                        if user is not None and user.userid == result['createdBy']:
+                            result['location'] = data['location']
+                            return make_response(jsonify({'message': "Incident Updated", "data":result}), 200)
+                        else:
+                            return make_response(jsonify({"message":"Forbidden: Record not owned"}), 403)
+                    else:
+                        return make_response(jsonify({"message":"Location/userid is not present"}), 400)
+                else:
+                    return make_response(jsonify({"message":"Cannot update a record not in draft state"}),403)
+            else:
+                return make_response(jsonify({"message":"Update on non-existing record denied"}),404)
+        else:
+            return make_response(jsonify({"message": "Empty payload"}), 400)       
