@@ -87,7 +87,7 @@ class LoginEndpoint(Resource):
         if not data:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
-        required_fields = ['username', 'password']
+        required_fields = ["username", "password"]
         if all(i in data for i in required_fields):
             for user in self.users:
                 if user.username == data['username']:
@@ -154,9 +154,28 @@ class IncidentEndpoint(BaseIncidentEndpoint):
         else:
             return make_response(jsonify({"message": "No incidents created yet!"}), 200)
 
-    def delete(self, id):
-        pass
-
+    def delete(self, incidentId):
+        result = self.search(incidentId)
+        data = request.get_json(force=True)
+        if result is not None:
+            if 'userid' in data:
+                user =  self.search_user(data['userid'])
+                if user is not None and user.userid == result['createdBy']:
+                    incident_to_pop =  self.db.db.index(result)
+                    self.db.db.pop(incident_to_pop)
+                    return make_response(jsonify({
+                            "message":"Incident record has been deleted",
+                            "status": 204,
+                            "id":incidentId}), 200)
+                else:
+                    return make_response(jsonify({"message":"Forbidden: Record not owned", "status":403}), 403)            
+            else:
+                return make_response(jsonify({"message":"Missing userid field","status":400 }), 400)
+        else:
+            return make_response(jsonify({
+                    "message":"Incident does not exist",
+                    "status": 404
+                    }), 404)
 
 class IncidentEditCommentEndpoint(BaseIncidentEndpoint):
     def put(self, incidentId):
