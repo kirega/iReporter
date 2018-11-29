@@ -104,27 +104,6 @@ class LoginEndpoint(Resource):
 class BaseIncidentEndpoint(Resource, IncidentModel):
     def __init__(self):
         self.db = IncidentModel()
-        # default records
-        self.db.save("intervention",
-                     "help seal large potholes causing accidents on Waiyaki Way",
-                     "-1.28333, 36.81667",
-                     1,
-                     ["https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg",
-                      "https://wallpaperbrowse.com/media/images/th.jpg"],
-                     ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
-                     )
-        self.db.save("red-flag",
-                     "Police taking bribes",
-                     "-1.28333, 36.81667",
-                     2,
-                     ["https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg",
-                      "https://wallpaperbrowse.com/media/images/th.jpg"],
-                     ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"],
-                     'under-investigation'
-                     )
-
         self.userdb = user_db
     # used to find a particular incident record
 
