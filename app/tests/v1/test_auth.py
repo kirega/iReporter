@@ -70,7 +70,19 @@ class FlaskUserTest(unittest.TestCase):
             duplicate_email_signup_data
         )
         self.wrong_login_data_format = json.dumps(wrong_login_data_format)
-        self.nonexisting_user = nonexisting_user
+        self.nonexisting_user = json.dumps(nonexisting_user)
+
+    def test_user_signup_with_empty_body(self):
+        result = self.app.post('/api/v1/signup', data=json.dumps({}))
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Missing or invalid field members")
+
+    def test_user_login_with_empty_body(self):
+        result = self.app.post('/api/v1/login', data=json.dumps({}))
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Missing or invalid field members")
 
     def test_user_can_signup(self):
         "Test that by posting user data to the endpoint, it gets created"
@@ -116,14 +128,14 @@ class FlaskUserTest(unittest.TestCase):
         data = json.loads(result.data)
         self.assertEqual(data['message'], "Missing or invalid field members")
 
-    # def test_login_with_nonexisting_user(self):
-    #     """Test that a user providing correct credentials in is unable to login
-    #      if user does not exist"""
-    #     result = self.app.post(
-    #         '/api/v1/login', data=self.nonexisting_user)
-    #     self.assertEqual(result.status_code, 401)
-    #     data = json.loads(result.data)
-    #     self.assertEqual(data['message'], "User does not exist")
+    def test_login_with_nonexisting_user(self):
+        """Test that a user providing correct credentials in is unable to login
+         if user does not exist"""
+        result = self.app.post(
+            '/api/v1/login', data=self.nonexisting_user)
+        self.assertEqual(result.status_code, 401)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "User does not exist")
 
     def test_sign_up_existing_username(self):
         """"Tests that a username and email are unique"""
@@ -140,6 +152,7 @@ class FlaskUserTest(unittest.TestCase):
         self.assertEqual(result.status_code, 400)
         data = json.loads(result.data)
         self.assertEqual(data['message'], "Email already exists")
+
 
 if __name__ == '__main__':
     unittest.main()
