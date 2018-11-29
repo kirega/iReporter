@@ -104,24 +104,42 @@ class LoginEndpoint(Resource):
 class BaseIncidentEndpoint(Resource, IncidentModel):
     def __init__(self):
         self.db = IncidentModel()
-        # default record    
+        # default records
         self.db.save("intervention",
-                     "Police taking bribes",
+                     "help seal large potholes causing accidents on Waiyaki Way",
                      "-1.28333, 36.81667",
-                     "1",
+                     1,
                      ["https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg",
                       "https://wallpaperbrowse.com/media/images/th.jpg"],
                      ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"]
                      )
-        self.userdb = user_db
+        self.db.save("red-flag",
+                     "Police taking bribes",
+                     "-1.28333, 36.81667",
+                     2,
+                     ["https://wallpaperbrowse.com/media/images/soap-bubble-1958650_960_720.jpg",
+                      "https://wallpaperbrowse.com/media/images/th.jpg"],
+                     ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"],
+                     'under-investigation'
+                     )
 
+        self.userdb = user_db
+    # used to find a particular incident record
+
+    def search(self, incidentId):
+        return next(filter(lambda i: i["incidentId"] == incidentId, self.db.db), None)
+
+    def search_user(self,userid):
+        return next(filter(lambda u: u.userid == userid, self.userdb), None)
 
 class AllIncidentsEndpoint(BaseIncidentEndpoint):
     """
         This endpoint handles the GET to get all incidents
         As well as POST for any new incident
     """
+
     def get(self):
         return make_response(jsonify(self.db.db), 200)
 
@@ -131,14 +149,16 @@ class AllIncidentsEndpoint(BaseIncidentEndpoint):
                            "location", "createdBy", "images", "videos"]
 
         if all(i in data for i in required_fields):
-            result = next(filter(lambda u: u.userid == data['createdBy'], self.userdb), None)
+            # Find the record created by a particular user
+            result = next(filter(lambda u: u.userid ==
+                                 data['createdBy'], self.userdb), None)
             if result is not None:
-                self.db.save(data['incidentType'], data["comment"], data['location'],
-                            data['createdBy'], data['images'], data['videos'])
-                return make_response(jsonify({"message": "New incident created"}), 201)
+                new_incident = self.db.save(data['incidentType'], data["comment"], data['location'],
+                                            data['createdBy'], data['images'], data['videos'])
+                return make_response(jsonify({"message": "New incident created", "data": new_incident}), 201)
             else:
                 return make_response(jsonify({"message": "Not Authorized"}), 401)
-                
+
         else:
             return make_response(jsonify({"message": "Missing or invalid field members"}), 400)
 
@@ -147,16 +167,15 @@ class IncidentEndpoint(BaseIncidentEndpoint):
 
     def get(self, incidentId):
         if(len(self.db.db) > 0):
-            result = next(
-                filter(lambda i: i["incidentId"] == incidentId, self.db.db), None)
+            result = self.search(incidentId)
             if result is not None:
-                return make_response(jsonify(result), 200)
+                return make_response(jsonify({"data": result}), 200)
             else:
-                return make_response(jsonify({"message": "Incident does not exist"}),404)
+                return make_response(jsonify({"message": "Incident does not exist"}), 404)
         else:
             return make_response(jsonify({"message": "No incidents created yet!"}), 200)
 
-    def put(self, id):
+    def delete(self, id):
         pass
 
 
