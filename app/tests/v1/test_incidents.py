@@ -107,6 +107,7 @@ class IncidentsTest(unittest.TestCase):
         self.assertEqual(
             data['message'], "Update on non-existing record denied")
     # TODO :: REWRITE THIS TEST
+
     def test_update_with_empty_values(self):
         data = json.dumps({})
         result = self.app.put('/api/v1/incident/1/location', data=data)
@@ -122,8 +123,9 @@ class IncidentsTest(unittest.TestCase):
         result = self.app.put('/api/v1/incident/2/comment', data=data)
         self.assertEqual(result.status_code, 403)
         data = json.loads(result.data)
-        self.assertEqual(data['message'],"Cannot update a record not in draft state")
-    
+        self.assertEqual(
+            data['message'], "Cannot update a record not in draft state")
+
     def test_update_user_didnt_create_comment(self):
         """"Tests that only user who created can update the record"""
         data = json.dumps({"comment": "Too many potholes",
@@ -131,6 +133,32 @@ class IncidentsTest(unittest.TestCase):
         result = self.app.put('/api/v1/incident/1/comment', data=data)
         self.assertEqual(result.status_code, 403)
 
+# DELETE AN INCIDENT TESTS
+    def test_delete_incident(self):
+        result = self.app.delete('/api/v1/incident/3',
+                                 data=json.dumps({"userid": 1}))
+        data = json.loads(result.data)
+        self.assertEqual(data["status"], 204)
+        self.assertEqual(data['message'], "Incident record has been deleted")
 
+    def test_delete_incident_with_wrong_user(self):
+        result = self.app.delete('/api/v1/incident/2',
+                                 data=json.dumps({"userid": 1}))
+        data = json.loads(result.data)
+        self.assertEqual(result.status_code, 403)
+        self.assertEqual(data['message'], "Forbidden: Record not owned")
+
+    def test_delete_incident_with_missing_field(self):
+        result = self.app.delete('/api/v1/incident/2',
+                            data=json.dumps({}))
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'],"Missing userid field")
+    def test_delete_nonexisting_incident(self):
+        result = self.app.delete('/api/v1/incident/1000',
+                                 data=json.dumps({"userid": 1}))
+        data = json.loads(result.data)
+        self.assertEqual(result.status_code, 404)
+        self.assertEqual(data['message'], "Incident does not exist")
 if __name__ == '__main__':
     unittest.main()
