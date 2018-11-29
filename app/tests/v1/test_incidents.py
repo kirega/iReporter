@@ -106,7 +106,15 @@ class IncidentsTest(unittest.TestCase):
         data = json.loads(result.data)
         self.assertEqual(
             data['message'], "Update on non-existing record denied")
-    # TODO :: REWRITE THIS TEST
+    
+    def test_update_on_with_wrong_format(self):
+        data = json.dumps({"comment": "Too many potholes",
+                          })
+        result = self.app.put('/api/v1/incident/1/comment', data=data)
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(
+            data['message'], "Comment/userid is not present")
 
     def test_update_with_empty_values(self):
         data = json.dumps({})
