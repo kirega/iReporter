@@ -66,15 +66,16 @@ class IncidentsTest(unittest.TestCase):
     def test_get_all_incidents(self):
         result = self.app.get('/api/v1/incidents')
         self.assertEqual(result.status_code, 200)
-    
+
     def test_create_new_incident_user_doesnt_exist(self):
-        result = self.app.post('/api/v1/incidents', data=self.new_incident_data_nonexisting_user)
+        result = self.app.post('/api/v1/incidents',
+                               data=self.new_incident_data_nonexisting_user)
         self.assertEqual(result.status_code, 401)
         data = json.loads(result.data)
         self.assertEqual(data['message'], "Not Authorized")
 
     def test_get_specific_incident(self):
-        result  = self.app.get("/api/v1/incident/1")
+        result = self.app.get("/api/v1/incident/1")
         self.assertEqual(result.status_code, 200)
 
     def test_get_non_existing_record(self):
@@ -132,5 +133,4 @@ class IncidentsTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main() 
-    
+    unittest.main()
