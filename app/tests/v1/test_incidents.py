@@ -78,8 +78,58 @@ class IncidentsTest(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
     def test_get_non_existing_record(self):
-        result  = self.app.get("/api/v1/incident/1000")
+        result = self.app.get("/api/v1/incident/1000")
         self.assertEqual(result.status_code, 404)
+
+    def test_update_an_incident_location(self):
+        data = json.dumps({"location": "-1.28333, 36.81667",
+                           "userid": 1})
+        result = self.app.put('/api/v1/incident/1/location', data=data)
+        self.assertEqual(result.status_code, 200)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Incident Updated")
+
+    def test_update_an_incident_comment(self):
+        data = json.dumps({"comment": "Too many potholes",
+                           "userid": 1})
+        result = self.app.put('/api/v1/incident/1/comment', data=data)
+        self.assertEqual(result.status_code, 200)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Incident Updated")
+
+    def test_update_on_nonexisting_incident(self):
+        data = json.dumps({"comment": "Too many potholes",
+                           "userid": 1})
+        result = self.app.put('/api/v1/incident/1000/location', data=data)
+        self.assertEqual(result.status_code, 404)
+        data = json.loads(result.data)
+        self.assertEqual(
+            data['message'], "Update on non-existing record denied")
+    # TODO :: REWRITE THIS TEST
+    def test_update_with_empty_values(self):
+        data = json.dumps({})
+        result = self.app.put('/api/v1/incident/1/location', data=data)
+        self.assertEqual(result.status_code, 400)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'], "Empty payload")
+
+    def test_update_on_incident_not_in_draft(self):
+        """Test that an incident that is not in draft cannot be 
+        edited except to change the status"""
+        data = json.dumps({"comment": "Too many potholes",
+                           "userid": 2})
+        result = self.app.put('/api/v1/incident/2/comment', data=data)
+        self.assertEqual(result.status_code, 403)
+        data = json.loads(result.data)
+        self.assertEqual(data['message'],"Cannot update a record not in draft state")
+    
+    def test_update_user_didnt_create_comment(self):
+        """"Tests that only user who created can update the record"""
+        data = json.dumps({"comment": "Too many potholes",
+                           "userid": 2})
+        result = self.app.put('/api/v1/incident/1/comment', data=data)
+        self.assertEqual(result.status_code, 403)
+
 
 if __name__ == '__main__':
     unittest.main() 
