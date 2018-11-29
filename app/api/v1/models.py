@@ -28,16 +28,17 @@ class IncidentModel():
     def __init__(self):
         self.db = incidents
 
-    def save(self,incidentType,comment,location,createdBy,images,videos):
+    def save(self,incidentType,comment,location,createdBy,images,videos,status="draft"):
         data = {
             "incidentId": len(self.db) + 1,
             "createdOn": datetime.datetime.now(),
             "createdBy":createdBy,
             "incidentType":incidentType,
             "location": location,
-            "status": "draft",
+            "status": status,
             "comment": comment,
             "images" : images,
             "videos": videos
         }   
         self.db.append(data)
+        return data

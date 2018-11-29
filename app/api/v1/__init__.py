@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask_restful import Api
-from .views import SignUpEndpoint, LoginEndpoint, AllIncidentsEndpoint, IncidentEndpoint
+from .views import (SignUpEndpoint, LoginEndpoint,
+                    AllIncidentsEndpoint, IncidentEndpoint,
+                    IncidentEditCommentEndpoint, IncidentEditLocationEndpoint)
 
 v1 = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(v1)
