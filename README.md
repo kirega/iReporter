@@ -23,14 +23,14 @@ To view this site : https://kirega.github.io/iReporter/
 
 | Method  | Endpoint  | Usage  |
 |---|---|---|
-|POST | /api/v1/signup  | Register a user.  |   
-|POST  | api/v1/login | Create a new incident  |  
-|POST  | api/v1/incidents  | Create a new incident  |   
+|POST | api/v1/signup | Register a user.  |   
+|POST | api/v1/login | Login a new user  |  
+|POST | api/v1/incidents  | Create a new incident  |   
 |GET| api/v1/incidents| Get all the created incidents|
-|GET| api/v1/incident/<incidentId> | Get a single incident|
-|PUT|	api/v1/incident/<incidentId>location |	Update a single incident location.|
-|PUT|	api/v1/incident/<incidentId>comment |	Update a single incident comment.|
-|DELETE	| api/v1/incident/<incidentId>	| Delete a single incident.|
+|GET| api/v1/incident/ (incidentId) | Get a single incident|
+|PUT|	api/v1/incident/ (incidentId)/location |	Update a single incident location.|
+|PUT|	api/v1/incident/(incidentId)/comment |	Update a single incident comment.|
+|DELETE	| api/v1/incident/(incidentId)/comment	| Delete a single incident.|
 ## Installation guide and usage
 
 #### **Clone the repo.**
@@ -53,8 +53,12 @@ To view this site : https://kirega.github.io/iReporter/
 (env)$ cd iReporter/
 ```
 
+On Linux set the enviroment variables for the project
 ```
-(env)$ python run.py
+(env)$ export FLASK_APP=run.py
+(env)$ export FLASK_DEBUG=1
+(env)$ export FLASK_ENV=development
+(env)$ flask run
 ```
 
 #### **Run Tests**
