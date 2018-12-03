@@ -77,6 +77,8 @@ class IncidentsTest(unittest.TestCase):
     def test_get_specific_incident(self):
         result = self.app.get("/api/v1/incident/1")
         self.assertEqual(result.status_code, 200)
+        data  = json.loads(result.data)
+        self.assertEqual(data['data']["incidentId"], 2)
 
     def test_get_non_existing_record(self):
         result = self.app.get("/api/v1/incident/1000")
