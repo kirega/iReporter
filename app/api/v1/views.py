@@ -7,7 +7,7 @@ from flask_restful import Resource
 from .models import User, IncidentModel
 
 # default User
-default_user = User(
+DEFAULT_USER = User(
     userid=1,
     first_name="Joseph",
     last_name="Mutiga",
@@ -18,14 +18,22 @@ default_user = User(
     password="1234",
     isAdmin=True
 )
-user_db = [default_user]
+USER_DB = [DEFAULT_USER]
 
 
 class SignUpEndpoint(Resource):
+    """
+    A resource that provides the endpoint POST /signup.
+
+    """
+
     def __init__(self):
-        self.users = user_db
+        self.users = USER_DB
 
     def post(self):
+        """
+        Registers new users based on data sent
+        """
         data = request.get_json(force=True)
         list_of_fields = ['first_name', "last_name", "other_names", "phonenumber", "email",
                           "email", "username", "password"]
@@ -75,12 +83,14 @@ class SignUpEndpoint(Resource):
 
 
 class LoginEndpoint(Resource):
-    """"This endpoints handles all login posts"""
+    """"This endpoints handles all login posts
+    POST /login"""
 
     def __init__(self):
-        self.users = user_db
+        self.users = USER_DB
 
     def post(self):
+        """ Accepts login credentials and return success on succcessful authentication"""
         # check that the user exists and the password is correct.
         data = request.get_json(force=True)
 
@@ -102,16 +112,22 @@ class LoginEndpoint(Resource):
 
 
 class BaseIncidentEndpoint(Resource, IncidentModel):
+    """Base class for  ll derivative incidents resources"""
+
     def __init__(self):
         self.db = IncidentModel()
-        self.userdb = user_db
+        self.userdb = USER_DB
     # used to find a particular incident record
 
-    def search(self, incidentId):
-        return next(filter(lambda i: i["incidentId"] == incidentId, self.db.db), None)
+    def search(self, incident_id):
+        """"Utility function for  searching the existence of an instance in the database"""
 
-    def search_user(self,userid):
+        return next(filter(lambda i: i["incidentId"] == incident_id, self.db.db), None)
+
+    def search_user(self, userid):
+        """"Utility function for  searching the existence of an user in the database"""
         return next(filter(lambda u: u.userid == userid, self.userdb), None)
+
 
 class AllIncidentsEndpoint(BaseIncidentEndpoint):
     """
@@ -120,9 +136,14 @@ class AllIncidentsEndpoint(BaseIncidentEndpoint):
     """
 
     def get(self):
+        """Endpoint GET /incidents.
+        Returns list of all incidents"""
         return make_response(jsonify(self.db.db), 200)
 
     def post(self):
+        """Enpoint POST /incidents
+        Allows creation of new incidents"""
+
         data = request.get_json(force=True)
         required_fields = ["incidentType", "comment",
                            "location", "createdBy", "images", "videos"]
@@ -134,7 +155,8 @@ class AllIncidentsEndpoint(BaseIncidentEndpoint):
             if result is not None:
                 new_incident = self.db.save(data['incidentType'], data["comment"], data['location'],
                                             data['createdBy'], data['images'], data['videos'])
-                return make_response(jsonify({"message": "New incident created", "data": new_incident}), 201)
+                return make_response(jsonify({"message": "New incident created",
+                                              "data": new_incident}), 201)
             else:
                 return make_response(jsonify({"message": "Not Authorized"}), 401)
 
@@ -143,10 +165,16 @@ class AllIncidentsEndpoint(BaseIncidentEndpoint):
 
 
 class IncidentEndpoint(BaseIncidentEndpoint):
+    """"Endpoint for managing individual instance records"""
 
-    def get(self, incidentId):
-        if(len(self.db.db) > 0):
-            result = self.search(incidentId)
+    def get(self, incident_id):
+        """
+        GET /incident/<incident_id>
+        Returns a single instance
+        """
+
+        if self.db.db:
+            result = self.search(incident_id)
             if result is not None:
                 return make_response(jsonify({"data": result}), 200)
             else:
@@ -154,71 +182,106 @@ class IncidentEndpoint(BaseIncidentEndpoint):
         else:
             return make_response(jsonify({"message": "No incidents created yet!"}), 200)
 
-    def delete(self, incidentId):
-        result = self.search(incidentId)
+    def delete(self, incident_id):
+        """
+        DELETE /incident/<incident_id>
+        deletes a single instance
+        """
+
+        result = self.search(incident_id)
         data = request.get_json(force=True)
         if result is not None:
             if 'userid' in data:
-                user =  self.search_user(data['userid'])
+                user = self.search_user(data['userid'])
                 if user is not None and user.userid == result['createdBy']:
-                    incident_to_pop =  self.db.db.index(result)
+                    incident_to_pop = self.db.db.index(result)
                     self.db.db.pop(incident_to_pop)
                     return make_response(jsonify({
-                            "message":"Incident record has been deleted",
-                            "status": 204,
-                            "id":incidentId}), 200)
+                        "message": "Incident record has been deleted",
+                        "status": 204,
+                        "id": incident_id}), 200)
                 else:
-                    return make_response(jsonify({"message":"Forbidden: Record not owned", "status":403}), 403)            
+                    return make_response(jsonify({"message": "Forbidden: Record not owned",
+                                                  "status": 403}), 403)
             else:
-                return make_response(jsonify({"message":"Missing userid field","status":400 }), 400)
+                return make_response(jsonify({"message": "Missing userid field",
+                                              "status": 400}), 400)
         else:
             return make_response(jsonify({
-                    "message":"Incident does not exist",
-                    "status": 404
-                    }), 404)
+                "message": "Incident does not exist",
+                "status": 404
+            }), 404)
+
 
 class IncidentEditCommentEndpoint(BaseIncidentEndpoint):
-    def put(self, incidentId):
+    """
+    Enpoint PUT /incident/1
+    Allows for editing the comment on an incident
+    """
+
+    def put(self, incident_id):
+        """Allows for editing the comment on an incident"""
+
         data = request.get_json(force=True)
-        if len(data) > 0:
-            result = self.search(incidentId)
+        if data:
+            result = self.search(incident_id)
             if result is not None:
                 if result['status'] == 'draft':
-                    if 'comment' in data and 'userid' in data :
-                        user =  self.search_user(data['userid'])
+                    if 'comment' in data and 'userid' in data:
+                        user = self.search_user(data['userid'])
                         if user is not None and user.userid == result['createdBy']:
                             result['comment'] = data['comment']
-                            return make_response(jsonify({'message': "Incident Updated", "data":result}), 200)
+                            return make_response(jsonify({
+                                'message': "Incident Updated",
+                                "data": result}), 200)
                         else:
-                            return make_response(jsonify({"message":"Forbidden: Record not owned"}), 403)
+                            return make_response(jsonify({
+                                "message": "Forbidden: Record not owned"}), 403)
                     else:
-                        return make_response(jsonify({"message":"Comment/userid is not present"}), 400)
+                        return make_response(jsonify({
+                            "message": "Comment/userid is not present"}), 400)
                 else:
-                    return make_response(jsonify({"message":"Cannot update a record not in draft state"}),403)
+                    return make_response(jsonify({
+                        "message": "Cannot update a record not in draft state"}), 403)
             else:
-                return make_response(jsonify({"message":"Update on non-existing record denied"}),404)
+                return make_response(jsonify({
+                    "message": "Update on non-existing record denied"}), 404)
         else:
-            return make_response(jsonify({"message": "Empty payload"}), 400)       
+            return make_response(jsonify({
+                "message": "Empty payload"}), 400)
+
 
 class IncidentEditLocationEndpoint(BaseIncidentEndpoint):
-    def put(self, incidentId):
+    """
+    Enpoint PUT /incident/1
+    Allows for editing the location on an incident
+    """
+
+    def put(self, incident_id):
+        """  Allows for editing the location on an incident"""
+
         data = request.get_json(force=True)
-        if len(data) > 0:
-            result = self.search(incidentId)
+        if data:
+            result = self.search(incident_id)
             if result is not None:
                 if result['status'] == 'draft':
                     if 'location' in data and 'userid' in data:
-                        user =  self.search_user(data['userid'])
+                        user = self.search_user(data['userid'])
                         if user is not None and user.userid == result['createdBy']:
                             result['location'] = data['location']
-                            return make_response(jsonify({'message': "Incident Updated", "data":result}), 200)
+                            return make_response(jsonify({
+                                'message': "Incident Updated", "data": result}), 200)
                         else:
-                            return make_response(jsonify({"message":"Forbidden: Record not owned"}), 403)
+                            return make_response(jsonify({
+                                "message": "Forbidden: Record not owned"}), 403)
                     else:
-                        return make_response(jsonify({"message":"Location/userid is not present"}), 400)
+                        return make_response(jsonify({
+                            "message": "Location/userid is not present"}), 400)
                 else:
-                    return make_response(jsonify({"message":"Cannot update a record not in draft state"}),403)
+                    return make_response(jsonify({
+                        "message": "Cannot update a record not in draft state"}), 403)
             else:
-                return make_response(jsonify({"message":"Update on non-existing record denied"}),404)
+                return make_response(jsonify({
+                    "message": "Update on non-existing record denied"}), 404)
         else:
-            return make_response(jsonify({"message": "Empty payload"}), 400)       
+            return make_response(jsonify({"message": "Empty payload"}), 400)
