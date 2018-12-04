@@ -135,7 +135,7 @@ class FlaskUserTest(unittest.TestCase):
             '/api/v1/login', data=self.nonexisting_user)
         self.assertEqual(result.status_code, 401)
         data = json.loads(result.data)
-        self.assertEqual(data['message'], "User does not exist")
+        self.assertEqual(data['message'],"Login Failed!")
 
     def test_sign_up_existing_username(self):
         """"Tests that a username and email are unique"""
