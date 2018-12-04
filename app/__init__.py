@@ -10,7 +10,6 @@ from .db_con import db_migrate
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    db_migrate()
     app.config.from_object(config.DevelopmentConfig)
     app.register_blueprint(v1)
     return app
