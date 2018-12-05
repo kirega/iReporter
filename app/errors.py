@@ -1,4 +1,3 @@
-
 from flask import Blueprint, make_response, jsonify
 
 errors = Blueprint('errors', __name__)
@@ -11,8 +10,8 @@ def page_not_found(err):
         {
             "status": 404,
             "message": "Page not found"
-        }, 404
-    ))
+        }
+    ), 404)
 
 
 @errors.app_errorhandler(500)
@@ -21,8 +20,8 @@ def server_error(err):
         {
             "status": 500,
             "message": "An exception occured, server error"
-        }, 500
-    ))
+        }
+    ), 500)
 
 @errors.app_errorhandler(405)
 def method_not_allowed(err):
@@ -30,5 +29,5 @@ def method_not_allowed(err):
         {
             "status": 405,
             "message": "Method is not allowed on this endpoint"
-        }, 405
-    ))
+        }
+    ), 405)
